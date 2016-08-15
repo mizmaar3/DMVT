@@ -44,7 +44,7 @@ let DataManipulation = {
       sortable.push([ key, data[key] ]);
     }
     sortable.sort( (a,b) => {
-        return Number(a[0].split("-")[2]) - Number(b[0].split("-")[2])
+        return (new Date(a[0])) - (new Date(b[0]))
     });
 
     let sorted = {};
