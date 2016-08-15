@@ -4,13 +4,14 @@ let Dropdown = require('../common-ui/dropdown.jsx');
 let DataView = require('./data-view.jsx');
 let HttpRequest = require('./http-request.js');
 let C = require('./constants.js');
+let WelcomeContent = require('./welcome-content.jsx');
 
 let App = React.createClass({
   getInitialState(){
     return {
       loading: true,
-      campaign: null,
-      goal: null
+      campaign: false,
+      goal: false
     }
   },
   componentDidMount(){
@@ -103,7 +104,7 @@ let App = React.createClass({
     });
   },
   render() {
-    let containerClass = this.state.loading ? "hide" : "show";
+
     let campaignItems = this.getCampaignItems() || [];
     let goalItems = this.state.campaign ? this.getGoalItems() : [];
     let perCampaignView = this.state.campaign && !this.state.goal ? true : false;
@@ -111,7 +112,7 @@ let App = React.createClass({
     let dataViewTitle = perCampaignView ? this.state.campaign +" Details" : this.state.campaign +"'s "+ this.state.goal + " impressions per day";
 
     return (
-      <div className={containerClass}>
+      <div >
         <h1>C.pageTitle</h1>
         <Dropdown
           type="select"
@@ -126,6 +127,8 @@ let App = React.createClass({
           onChange={this._onGoalChange}
           label="SELECT A GOAL"
         />
+
+        <WelcomeContent show={this.state.campaign === false} />
 
         <DataView
           title={dataViewTitle}

@@ -1,14 +1,14 @@
-# gulp-es6-rollup-boilerplate
+# The Delivery Metric Visualization Tool
 
 > Project tested with node v 6.2.2
 
-A very basic boilerplate to start your Javascript project ideally with [ES6](https://babeljs.io/docs/learn-es2015/) script [Rollup](http://rollupjs.org/) module bundler and [Less](http://lesscss.org/) css preprocessor.
+Reading serialized data over http-request and creating visual chart of delivery / impression data. Codebase consist of [ES6](https://babeljs.io/docs/learn-es2015/) script with [ReastJs](https://facebook.github.io/react/) components and [Less](http://lesscss.org/) css preprocessor styles.
 
-- The aim of this package is to start basic web project which usually have JS and css (less css) files, build them for release by compiling ES2015 code and concatenate multiple js and css files into single bundle.
+- [Browserify](http://browserify.org/) is used to `bundle` the Project.
 
-- This boilerplate uses `Rollup` module bundler which makes bundler more efficient than `browserify` or `webpack` as it bundles minimal code and ignore unused modules to get bundled ___see Example Code Explanation at the end___.
+- [react-google-charts](https://www.npmjs.com/package/react-google-chart) made it easy to create `Barchart`.
 
-> Normally if you require a module, you import the whole thing. ES2015 lets you just import the bits you need, without mucking around with custom builds. It's a revolution in how we use libraries in JavaScript, and it's happening right now.
+- I made a custom data view component called `Table View` (similar to google charts Table view) which is showing aggregated data in a table.
 
 - Bundling done with simple commands using [Gulp](http://gulpjs.com/) which is famous build system to automate build process.
 
@@ -18,13 +18,13 @@ A very basic boilerplate to start your Javascript project ideally with [ES6](htt
 First, clone the repo via git:
 
 ```bash
-git clone https://github.com/mizmaar3/gulp-es6-rollup-boilerplate your-project-name
+git clone https://github.com/mizmaar3/DMVT your-folder-name
 ```
 
 And then install dependencies.
 
 ```bash
-$ cd your-project-name && npm install
+$ cd your-folder-name && npm install
 ```
 
 
@@ -60,23 +60,23 @@ To start local server please run
 $ npm run start
 ```
 
-and goto http://127.0.0.1:9800 to test if code worked. You should get some text on the page.
+and goto http://127.0.0.1:9830 or http://localhost:9830
 
+> Loading the page will show you two dropdown option boxes. If you only select a `campaign` it will generate a table view with each row showing goals of selected campaign and its total impression and impression per day aggregated.
 
-## DevTools
-
-#### Toggle Chrome DevTools
-
-- OS X: <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
-- Linux: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
-- Windows: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
+> If a campaign is selected and then you select a goal, it will generate `Barchart` with x-axis as day and y-axis as total impression on that day. There is a tooltip on Barchart as well.
 
 
 ## Example Code Explanation
 
 #### The JS folder
 
-- So basically JS folder contains three files. The main file is `main.rollup.js` and ´math.js & person.js´ are utility functions used in main files. Both util files have two utility functions each exported as modules. The `main.rollup.js` only using one module from each utility file and `Rollup` bundler will only include those two functions in bundler.js which are used by `main.rollup.js` and will ignore rest.
+- This folder contains all react modules and util functions like http-request promise.
+
+
+#### The common-ui
+
+- It contains the only used input custom module for dropdown `select` options.
 
 
 #### The LESS folder
