@@ -54,7 +54,7 @@ inside your project folder
 
 ## Start Server
 
-To start local server please run
+To start local server, open another terminal window and run
 
 ```bash
 $ npm run start
@@ -68,7 +68,7 @@ and goto http://127.0.0.1:9830 or http://localhost:9830
 
 
 
-## Example Code Explanation
+## Brief Code Explanation
 
 #### The JS folder
 
