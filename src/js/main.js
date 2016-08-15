@@ -5,8 +5,10 @@ let DataView = require('./data-view.jsx');
 let HttpRequest = require('./http-request.js');
 let C = require('./constants.js');
 let WelcomeContent = require('./welcome-content.jsx');
+let DataManipulation = require('./data-manipulation.js');
 
-let App = React.createClass({
+let Main = React.createClass({
+  mixins: [DataManipulation],
   getInitialState(){
     return {
       loading: true,
@@ -15,10 +17,12 @@ let App = React.createClass({
     }
   },
   componentDidMount(){
-    top.app = this;
     this.setData();
   },
   setData() {
+    /**
+    * Set data once using xmlHttp promose
+    **/
     if(!this.dataset) {
       HttpRequest('GET', C.dataEndPoint)
         .then((data) => {
@@ -29,74 +33,11 @@ let App = React.createClass({
         });
     }
   },
-  getCampaignItems() {
-     if (this.dataset) {
-       return this.dataset[C.dataSetName].map((item) => {
-         return item.name;
-       });
-     }
-     return [];
-  },
-  getGoalItems() {
-     if (this.dataset) {
-       return this.dataset[C.dataSetName].filter((item) => {
-         return item.name === this.state.campaign;
-       })[0]["goals"].map((item) => {
-         return item.name;
-       });
-     }
-     return [];
-  },
-  accumulatedDataPerDay() {
-    if(this.state.campaign && this.state.goal) {
-      let sum = new Object();
-      let selectedGroup = this.dataset[C.dataSetName].filter((item) => {
-       return item.name === this.state.campaign
-      })[0].goals.filter((item) => {
-        return item.name === this.state.goal
-      })[0].data;
-
-      Object.keys(selectedGroup).forEach( (key) => {
-        let perDateKey = key.split(".")[0];
-        sum[perDateKey] = (sum[perDateKey] ?  sum[perDateKey] + selectedGroup[key] : selectedGroup[key]);
-      });
-
-      return sum;
-    }
-    return {};
-  },
-  accumulatedDataPerCampaign() {
-    if(this.state.campaign) {
-      let sum = {};
-      let totals = {};
-      let selectedCampaignGoals = this.dataset[C.dataSetName].filter((item) => {
-        return item.name === this.state.campaign
-      })[0].goals.map((item) => {
-        sum[item.name] = sum[item.name] || {};
-        Object.keys(item.data).forEach((key) => {
-          let perDateKey = key.split(".")[0];
-          sum[item.name][perDateKey] = (sum[item.name][perDateKey] ? sum[item.name][perDateKey] + item.data[key] : item.data[key]);
-        });
-      });
-
-      Object.keys(sum).forEach((key, i) => {
-       totals[key] = totals[key] || {};
-       Object.keys(sum[key]).forEach((_key, i) => {
-         totals[key]['imp'] = (totals[key]['imp'] ? totals[key]['imp'] + sum[key][_key] : sum[key][_key]);
-         totals[key]['days'] = 1+i;
-       });
-      });
-      return totals;
-    }
-
-    return {};
-  },
   _onCampaignChange(value) {
-    let newSate = {
+    this.setState({
       campaign: value !== "false" ? value : false,
       goal: value !== "false" ? this.state.goal : false
-    };
-    this.setState(newSate);
+    });
   },
   _onGoalChange(value) {
     this.setState({
@@ -104,7 +45,6 @@ let App = React.createClass({
     });
   },
   render() {
-
     let campaignItems = this.getCampaignItems() || [];
     let goalItems = this.state.campaign ? this.getGoalItems() : [];
     let perCampaignView = this.state.campaign && !this.state.goal ? true : false;
@@ -113,7 +53,9 @@ let App = React.createClass({
 
     return (
       <div >
+
         <h1>{C.pageTitle}</h1>
+
         <Dropdown
           type="select"
           items={campaignItems}
@@ -139,4 +81,4 @@ let App = React.createClass({
   }
 });
 
-ReactDOM.render(<App />, document.getElementById("main"));
+ReactDOM.render(<Main />, document.getElementById("main"));

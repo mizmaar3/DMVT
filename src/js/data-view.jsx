@@ -10,7 +10,7 @@ let Data = React.createClass({
     let rows = [];
     let chartElement = null;
     if (this.props.perCampaignView) {
-      rows.push(["Goals", "Total Impression", "Impression /day"])
+      rows.push(["Goals", "Total Impression", "Avg. Impression /day"])
       Object.keys(this.props.data).forEach( (key) => {
           let averagePerDay = Math.round(this.props.data[key]["imp"]/this.props.data[key]["days"]);
           rows.push([key, this.props.data[key]["imp"], averagePerDay]);
