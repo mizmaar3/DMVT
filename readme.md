@@ -67,6 +67,7 @@ and goto http://127.0.0.1:9830 or http://localhost:9830
 > If a campaign is selected and then you select a goal, it will generate `Barchart` with x-axis as day and y-axis as total impression on that day. There is a tooltip on Barchart as well.
 
 
+
 ## Example Code Explanation
 
 #### The JS folder
@@ -76,7 +77,7 @@ and goto http://127.0.0.1:9830 or http://localhost:9830
 
 #### The common-ui
 
-- It contains the only used input custom module for dropdown `select` options.
+- It contains the only used input custom component to create dropdown `select` options.
 
 
 #### The LESS folder

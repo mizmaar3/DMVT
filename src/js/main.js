@@ -113,7 +113,7 @@ let App = React.createClass({
 
     return (
       <div >
-        <h1>C.pageTitle</h1>
+        <h1>{C.pageTitle}</h1>
         <Dropdown
           type="select"
           items={campaignItems}
