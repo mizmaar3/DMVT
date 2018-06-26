@@ -1,4 +1,4 @@
-let HttpRequest = (method, url) => {
+const HttpRequest = (method, url) => {
   return new Promise(function (resolve, reject) {
 
     var xhr = new XMLHttpRequest();
@@ -18,4 +18,4 @@ let HttpRequest = (method, url) => {
   });
 };
 
-module.exports = HttpRequest;
+export default HttpRequest;

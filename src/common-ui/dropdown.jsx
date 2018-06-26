@@ -1,28 +1,37 @@
-let React = require('react');
+import React, { Component }  from 'react';
 
-let Dropdown = React.createClass({
+
+class Dropdown extends Component {
+
+  constructor () {
+    super();
+    this.onChange = this.onChange.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this._onChange = this._onChange.bind(this);
+    this._onBlur = this._onBlur.bind(this);
+  }
 
   onChange (event) {
     var value = event.target.value;
     this._onChange(value, event, this);
-  },
+  }
 
   onBlur (event) {
     var value = event.target.value;
     this._onBlur(value, event, this);
-  },
+  }
 
   _onChange() {
     if (this.props.onChange) {
       this.props.onChange.apply(null, arguments);
     }
-  },
+  }
 
   _onBlur () {
     if (this.props.onBlur) {
       this.props.onBlur.apply(null, arguments);
     }
-  },
+  }
 
   render () {
     var options = this.props.items.map( (item, key) => {
@@ -42,6 +51,6 @@ let Dropdown = React.createClass({
     );
   }
 
-});
+}
 
-module.exports = Dropdown;
+export default Dropdown;

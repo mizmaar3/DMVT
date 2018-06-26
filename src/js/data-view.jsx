@@ -1,8 +1,8 @@
-let React = require('react');
+import React, { Component } from 'react';
 let Chart = require('react-google-charts').Chart;
-let TableView = require('./data-table-view.jsx');
+import TableView from './data-table-view.jsx';
 
-let Data = React.createClass({
+class Data extends Component{
 
   render() {
     let chartData = [];
@@ -55,6 +55,6 @@ let Data = React.createClass({
 			<div>{chartElement}</div>
 		);
 	}
-});
+}
 
-module.exports = Data;
+export default Data;

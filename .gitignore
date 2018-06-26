@@ -1,5 +1,6 @@
 dist
 node_modules
 package-noneed.json
+package-lock.json
 *.log
 .git

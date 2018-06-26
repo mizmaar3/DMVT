@@ -1,30 +1,38 @@
-let React = require('react');
-let ReactDOM = require('react-dom');
-let Dropdown = require('../common-ui/dropdown.jsx');
-let DataView = require('./data-view.jsx');
-let HttpRequest = require('./http-request.js');
-let C = require('./constants.js');
-let WelcomeContent = require('./welcome-content.jsx');
-let DataManipulation = require('./data-manipulation.js');
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Dropdown from '../common-ui/dropdown.jsx';
+import DataView from './data-view.jsx';
+import HttpRequest from './http-request.js';
+import Constants from './constants.js';
+import WelcomeContent from './welcome-content.jsx';
+import DataManipulation from './data-manipulation.js';
+import '../less/main.less';
 
-let Main = React.createClass({
-  mixins: [DataManipulation],
-  getInitialState(){
-    return {
+class Main extends Component {
+
+  constructor() {
+    super();
+    this.state = {
       loading: true,
       campaign: false,
       goal: false
-    }
-  },
+    };
+
+    this.setData = this.setData.bind(this);
+    this._onCampaignChange = this._onCampaignChange.bind(this);
+    this._onGoalChange = this._onGoalChange.bind(this);
+  }
+
   componentDidMount(){
     this.setData();
-  },
+  }
+
   setData() {
     /**
     * Set data once using xmlHttp promose
     **/
     if(!this.dataset) {
-      HttpRequest('GET', C.dataEndPoint)
+      HttpRequest('GET', Constants.dataEndPoint)
         .then((data) => {
           this.dataset = data;
           this.setState({
@@ -32,29 +40,32 @@ let Main = React.createClass({
           });
         });
     }
-  },
+  }
+
   _onCampaignChange(value) {
     this.setState({
       campaign: value !== "false" ? value : false,
       goal: value !== "false" ? this.state.goal : false
     });
-  },
+  }
+
   _onGoalChange(value) {
     this.setState({
       goal: value !== "false" ? value : false
     });
-  },
+  }
+
   render() {
-    let campaignItems = this.getCampaignItems() || [];
-    let goalItems = this.state.campaign ? this.getGoalItems() : [];
+    let campaignItems = DataManipulation.getCampaignItems(this.dataset) || [];
+    let goalItems = this.state.campaign ? DataManipulation.getGoalItems(this.dataset, this.state.campaign) : [];
     let perCampaignView = this.state.campaign && !this.state.goal ? true : false;
-    let dataForDataView = perCampaignView ? this.accumulatedDataPerCampaign() : this.accumulatedDataPerDay();
+    let dataForDataView = perCampaignView ? DataManipulation.accumulatedDataPerCampaign(this.dataset, this.state.campaign) : DataManipulation.accumulatedDataPerDay(this.dataset, this.state.campaign, this.state.goal);
     let dataViewTitle = perCampaignView ? this.state.campaign +" Details" : this.state.campaign +"'s "+ this.state.goal + " impressions per day";
 
     return (
       <div >
 
-        <h1>{C.pageTitle}</h1>
+        <h1>{Constants.pageTitle}</h1>
 
         <Dropdown
           type="select"
@@ -79,6 +90,6 @@ let Main = React.createClass({
       </div>
     )
   }
-});
+}
 
 ReactDOM.render(<Main />, document.getElementById("main"));

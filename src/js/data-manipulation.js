@@ -1,30 +1,30 @@
-let React = require('react');
-let ReactDOM = require('react-dom');
-let C = require('./constants.js');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Constants from './constants.js';
 
 let DataManipulation = {
-  getCampaignItems() {
+  getCampaignItems(dataset) {
     /**
     * Returns all available campaigns names from dataset
     *
     * @return {Array}
     **/
-     if (this.dataset) {
-       return this.dataset[C.dataSetName].map((item) => {
+     if (dataset) {
+       return dataset[Constants.dataSetName].map((item) => {
          return item.name;
-       });
+       })
      }
      return [];
   },
-  getGoalItems() {
+  getGoalItems(dataset, campaign) {
     /**
     * Returns all campaign's goals names from selected campaign
     *
     * @return {Array}
     **/
-     if (this.dataset) {
-       return this.dataset[C.dataSetName].filter((item) => {
-         return item.name === this.state.campaign;
+     if (dataset) {
+       return dataset[Constants.dataSetName].filter((item) => {
+         return item.name === campaign;
        })[0]["goals"].map((item) => {
          return item.name;
        });
@@ -54,19 +54,19 @@ let DataManipulation = {
     });
     return sorted;
   },
-  accumulatedDataPerDay() {
+  accumulatedDataPerDay(dataset, campaign, goal) {
     /**
     * It sum up the data for each day
     * of selected goal of selected campaign
     *
     * @return {Object} with key as date and value as total impression
     **/
-    if(this.state.campaign && this.state.goal) {
+    if(campaign && goal) {
       let sum = new Object();
-      let selectedGroup = this.dataset[C.dataSetName].filter((item) => {
-       return item.name === this.state.campaign
+      let selectedGroup = dataset[Constants.dataSetName].filter((item) => {
+       return item.name === campaign
       })[0].goals.filter((item) => {
-        return item.name === this.state.goal
+        return item.name === goal
       })[0].data;
 
       Object.keys(selectedGroup).forEach( (key) => {
@@ -74,22 +74,22 @@ let DataManipulation = {
         sum[perDateKey] = (sum[perDateKey] ?  sum[perDateKey] + selectedGroup[key] : selectedGroup[key]);
       });
 
-      return this.sortedDataByDay(sum);
+      return DataManipulation.sortedDataByDay(sum);
     }
     return {};
   },
-  accumulatedDataPerCampaign() {
+  accumulatedDataPerCampaign(dataset, campaign) {
     /**
     * It sum up the data for each goal of selected campaign
     * it will show up in a table view
     *
     * @return {Array}
     **/
-    if(this.state.campaign) {
+    if(campaign) {
       let sum = {};
       let totals = [];
-      let selectedCampaignGoals = this.dataset[C.dataSetName].filter((item) => {
-        return item.name === this.state.campaign
+      let selectedCampaignGoals = dataset[Constants.dataSetName].filter((item) => {
+        return item.name === campaign
       })[0].goals.map((item) => {
         sum[item.name] = sum[item.name] || {};
         Object.keys(item.data).forEach((key) => {
@@ -113,4 +113,4 @@ let DataManipulation = {
   }
 };
 
-module.exports = DataManipulation;
+export default DataManipulation;

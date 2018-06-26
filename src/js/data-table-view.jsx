@@ -1,6 +1,6 @@
-let React = require('react');
+import React, { Component } from 'react';
 
-let DataTableView = React.createClass({
+class DataTableView extends Component {
 
   render() {
     let rows = this.props.rows;
@@ -26,6 +26,6 @@ let DataTableView = React.createClass({
     )
   }
 
-});
+}
 
-module.exports = DataTableView;
+export default DataTableView;

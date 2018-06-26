@@ -1,6 +1,6 @@
-let React = require('react');
+import React, { Component } from 'react';
 
-let WelcomeContent = React.createClass({
+class WelcomeContent extends Component{
   render() {
     let theContent = this.props.show ? (
       <ul>
@@ -20,6 +20,6 @@ let WelcomeContent = React.createClass({
     )
   }
 
-});
+}
 
-module.exports = WelcomeContent;
+export default WelcomeContent;

@@ -33,14 +33,11 @@ $ cd your-folder-name && npm install
 Run this command to build and bundle the project.
 
 ```bash
-$ npm run build
+$ npm start
 ```
 
-or simple run
+It will open index.html into your default browser
 
-```bash
-$ gulp
-```
 
 To get minified+uglified version of bundle.js please run
 
@@ -48,19 +45,6 @@ To get minified+uglified version of bundle.js please run
 $ npm run release
 ```
 
-
-inside your project folder
-
-
-## Start Server
-
-To start local server, open another terminal window and run
-
-```bash
-$ npm run start
-```
-
-and goto http://127.0.0.1:9830 or http://localhost:9830
 
 > Loading the page will show you two dropdown option boxes. If you only select a `campaign` it will generate a table view with each row showing goals of selected campaign and its total impression and impression per day aggregated.
 
