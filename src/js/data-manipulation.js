@@ -1,8 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import Constants from './constants.js';
 
-let DataManipulation = {
+const DataManipulation = {
   getCampaignItems(dataset) {
     /**
     * Returns all available campaigns names from dataset
@@ -76,7 +74,7 @@ let DataManipulation = {
 
       return DataManipulation.sortedDataByDay(sum);
     }
-    return {};
+    return [];
   },
   accumulatedDataPerCampaign(dataset, campaign) {
     /**

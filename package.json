@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "build": "webpack",
+    "build": "webpack --mode development",
     "release": "webpack --mode production"
   },
   "devDependencies": {

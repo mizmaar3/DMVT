@@ -1,7 +1,7 @@
 const HttpRequest = (method, url) => {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {

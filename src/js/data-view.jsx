@@ -1,60 +1,69 @@
-import React, { Component } from 'react';
-let Chart = require('react-google-charts').Chart;
+import React from 'react';
+import { Chart } from 'react-google-charts';
 import TableView from './data-table-view.jsx';
+import PropTypes from "prop-types";
 
-class Data extends Component{
 
-  render() {
-    let chartData = [];
-    let chartOptions = null;
-    let rows = [];
-    let chartElement = null;
-    if (this.props.perCampaignView) {
-      rows.push(["Goals", "Total Impression", "Avg. Impression /day"])
-      Object.keys(this.props.data).forEach( (key) => {
-          let averagePerDay = Math.round(this.props.data[key]["imp"]/this.props.data[key]["days"]);
-          rows.push([key, this.props.data[key]["imp"], averagePerDay]);
-      });
-    } else {
-      chartData = [["Date", "Number of Impressions"]];
-      Object.keys(this.props.data).forEach( (key) => {
-          chartData.push([key, this.props.data[key]])
-      });
-      chartOptions = {
-          title: this.props.title,
-          backgroundColor: {
-            fill: "#ebebeb",
-            stroke: '#cccccc',
-            strokeWidth: 3
-          }
-      };
-    }
+const Data = ({title, data, perCampaignView}) => {
 
-    if (Object.keys(this.props.data).length > 0) {
-      if (this.props.perCampaignView) {
-        return (
-          <TableView
-            title={this.props.title}
-            rows={rows}
-            width={"700px"} />
-          )
-      } else {
-        return (
-          <Chart
-            chartType={"ColumnChart"}
-            data={chartData}
-            options={chartOptions}
-            width={"700px"}
-            height={"400px"}
-            legend_toggle={true} />
-          )
+  let chartData = [];
+  let chartOptions = null;
+  let rows = [];
+  let chartElement = null;
+
+  if (perCampaignView) {
+    rows.push(["Goals", "Total Impression", "Avg. Impression /day"])
+    Object.keys(data).forEach( (key) => {
+        let averagePerDay = Math.round(data[key]["imp"]/data[key]["days"]);
+        rows.push([key, data[key]["imp"], averagePerDay]);
+    });
+  } else {
+    chartData = [["Date", "Number of Impressions"]];
+    Object.keys(data).forEach( (key) => {
+        chartData.push([key, data[key]])
+    });
+    chartOptions = {
+      title,
+      backgroundColor: {
+        fill: "#ebebeb",
+        stroke: '#cccccc',
+        strokeWidth: 3
       }
-    }
+    };
+  }
 
-    return (
-			<div>{chartElement}</div>
-		);
-	}
-}
+  if (Object.keys(data).length > 0) {
+    if (perCampaignView) {
+      return (
+        <TableView
+          title={title}
+          rows={rows}
+          width={"700px"} />
+        )
+    } else {
+      return (
+        <Chart
+          chartType={"ColumnChart"}
+          data={chartData}
+          options={chartOptions}
+          width={"700px"}
+          height={"400px"}
+          legend_toggle={true} />
+        )
+    }
+  }
+
+  return (<div>{chartElement}</div>)
+
+};
+
+Data.propTypes = {
+  title: PropTypes.string,
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  perCampaignView: PropTypes.bool
+};
 
 export default Data;

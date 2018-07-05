@@ -42,7 +42,7 @@ module.exports = {
     })
   ],
   devServer: {
-    compress: true,
-    port: 9660
+    compress: false,
+    port: 9860
   }
 };
